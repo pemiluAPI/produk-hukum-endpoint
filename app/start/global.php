@@ -49,6 +49,16 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
+
+	// show global error in json
+	if (Config::get('app.debug'))
+	{
+		// return XApi::response(array('error' => 500, 'message' => 'Code too complex.'), 500);
+	}
+	else
+	{
+		return XApi::response(array('error' => 500, 'message' => 'Application error occured.'), 500);
+	}
 });
 
 /*

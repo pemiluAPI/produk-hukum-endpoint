@@ -10,8 +10,16 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Route::pattern('id', '[0-9]+');
 
 Route::get('/', function()
 {
-	return View::make('hello');
+	// return Redirect::to('api/regulations');
+	return XApi::response(array('error'=>400, 'message' => 'Not ready yet.'), 400);
 });
+
+App::missing(function($exception)
+{
+	return XApi::response(array('error'=>400, 'message' => 'Route unknown.'), 400);
+});
+
