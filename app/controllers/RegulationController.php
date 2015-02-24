@@ -17,6 +17,7 @@ class RegulationController extends BaseController {
 		$params = array();
 		$params['category'] = Input::get('category', 0);
 		$params['simple'] = Input::get('simple', TRUE);
+		$params['search'] = Input::get('search', TRUE);
 
 		return XApi::parser( $this->regulation->allRegulationsPaged($limit, $offset, $params) );
 	}

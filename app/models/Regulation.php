@@ -26,15 +26,30 @@ class Regulation extends \Eloquent
 		return Regulation::with('category')->skip($offset)->take($limit)->get()->toArray();
 	}
 
-	public function allRegulationsPaged($limit=100, $offset=0, $params=array('category'=>null, 'simple'=>TRUE))
+	public function allRegulationsPaged($limit=100, $offset=0, $params=array('category'=>null, 'simple'=>TRUE, 'search'=>null))
 	{
+		$thisTable = $this->table;
 		if ($params['simple'])
 		{
 			$query = DB::table($this->table);
 
+			// Search by Category
 			if (!empty($params['category']))
 			{
 				$query = $query->where("categories.id", '=', $params['category']);
+			}
+
+			// Search by title or description
+			if (!empty($params['search']))
+			{
+				$paramSearch = $params['search'];
+
+				$query = $query->where(function($groupQuery) use ($thisTable, $paramSearch)
+					{
+						$groupQuery
+							->orWhere("{$thisTable}.title", 'LIKE', "%{$paramSearch}%")
+							->orWhere("{$thisTable}.description", 'LIKE', "%{$paramSearch}%");
+					});
 			}
 
 			$query = $query
