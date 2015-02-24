@@ -17,9 +17,9 @@ class CreateRegulationsTable extends Migration {
 			$table->increments('id');
 			$table->integer('category_id')->unsigned();
 			$table->text('title');
-			$table->text('description');
-			$table->string('file_url');
-			$table->string('url');
+			$table->text('description')->nullable();
+			$table->string('file_url')->nullable();
+			$table->string('url')->nullable();
 			$table->nullableTimestamps();
 		});
 	}
