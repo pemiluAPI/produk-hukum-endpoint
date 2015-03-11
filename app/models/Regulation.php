@@ -40,7 +40,7 @@ class Regulation extends \Eloquent
 			}
 
 			// Search by title or description
-			if (!empty($params['search']))
+			if (!empty($params['search']) && ($params['search'] !== TRUE))
 			{
 				$paramSearch = $params['search'];
 
